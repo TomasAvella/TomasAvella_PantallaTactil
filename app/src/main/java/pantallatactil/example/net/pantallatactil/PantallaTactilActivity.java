@@ -21,9 +21,22 @@ public class PantallaTactilActivity extends AppCompatActivity implements View.On
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         TextView salida = (TextView) findViewById(R.id.TextViewSalida);
-        salida.append("\n"+"Presion: "+event.getPressure()+"\n"+
+        /*salida.append("\n"+"Presion: "+event.getPressure()+"\n"+
                 "Tamaño: "+event.getSize()+"\n"+"\n"+
-                event.toString()+"\n" );
+                event.toString()+"\n" );*/
+        //Practica 5.9
+        String acciones[] = {"ACTION_DOWN", "ACTION_UP", "ACTION_MOVE",
+                            "ACTION_CANCEL", "ACTION_OUTSIDE", "ACTION_POINTER_DOWN",
+                            "ACTION_POINTER_UP"};
+        int accion = event.getAction();
+        int codigoAccion = accion & event.ACTION_MASK;
+        int iPuntero = (accion & event.ACTION_POINTER_INDEX_MASK) >> event.ACTION_POINTER_INDEX_SHIFT;
+        salida.append("\n"+acciones[codigoAccion]);
+        salida.append(" Generada por puntero: "+ iPuntero);
+        for(int i = 0; i < event.getPointerCount(); i++){
+            salida.append("\nPuntero: "+ event.getPointerId(i) + " x: "+event.getX(i) + " y: "+event.getY(i));
+        }
+        salida.append("\n");
         return true;
     }
 }
